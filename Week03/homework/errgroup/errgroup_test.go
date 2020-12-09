@@ -182,7 +182,7 @@ func ExampleGroup_parallel() {
 		results := make([]Result, len(searches))
 		for i, search := range searches {
 			i, search := i, search // https://golang.org/doc/faq#closures_and_goroutines
-			g.Go(func(context.Context) error {
+			g.Go(func(ctx context.Context) error {
 				result, err := search(ctx, query)
 				if err == nil {
 					results[i] = result
