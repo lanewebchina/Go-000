@@ -1,5 +1,10 @@
 # Week03学习笔记
 
+## 本周的作业
+- 基于 errgroup 实现一个http server的启动和关闭,
+  以及 linux signal 信号的注册和处理,
+  要保证能够一个退出，全部注销退出。
+
 ## 要看的文章
 - Effective Go see https://github.com/bingohuang/effective-go-zh-en
 - https://golang.org/ref/mem
@@ -207,9 +212,10 @@ cpu l1缓存store buffer计算完了后来不及写入内存的例子
         找匹配的key,直到root context(Background和TODO Value函数会返回nil)
        ```
      - 调用这个方法的使用实际是创建了一个新的,parent是不会改的
-     - context.Value是面向
+     - context.Value的数据是面向请求的原数据，不应该作为函数的可选参数来使用
+       (比如context里面挂了一个sqlTx对象,传递到Dao层使用),因为元数据相对函数
+       参数更加是隐含的，面向请求的。而参数是更加显示的。
      - 使用场景: Tracking(链路追踪的信息),debug信息,调度的原数据(染色信息,API重要性)
-     - 
     
 
 ### Final Notes

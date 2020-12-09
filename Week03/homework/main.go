@@ -20,7 +20,6 @@ import (
  要保证能够一个退出，全部注销退出。
 */
 
-// Server is a HTTP server.
 type Server struct {
 	srv *http.Server
 }
@@ -56,7 +55,8 @@ func main() {
 	g := errgroup.WithContext(context.Background())
 	svr := NewServer()
 	//启动服务，当任何errorgroup中的goroutine产生error时，关闭httpServer
-	g.Go(func() error {
+
+	g.Go(func(ctx context.Context) error {
 		fmt.Println("start http")
 		go func() {
 			<-ctx.Done()
@@ -73,7 +73,7 @@ func main() {
 	})
 
 	//监听signal信号，当接收到退出相关信号退出
-	g.Go(func() error {
+	g.Go(func(ctx context.Context) error {
 		quit := make(chan os.Signal)
 		signal.Notify(quit, syscall.SIGINT, syscall.SIGTERM, syscall.SIGQUIT, os.Interrupt)
 		for {
@@ -89,7 +89,7 @@ func main() {
 	})
 
 	//其他后台任务
-	g.Go(func() error {
+	g.Go(func(ctx context.Context) error {
 		for {
 			select {
 			case <-ctx.Done():
@@ -101,8 +101,9 @@ func main() {
 			}
 		}
 	})
+
 	err := g.Wait()
 	fmt.Println(err)
 	<-stop
-	fmt.Println("server completely stopped!")
+	fmt.Println("server stopped")
 }
