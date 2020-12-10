@@ -61,6 +61,7 @@ func main() {
 				switch s {
 				case syscall.SIGQUIT, syscall.SIGTERM, syscall.SIGINT:
 					cancel()
+					break
 				}
 			}
 		}
