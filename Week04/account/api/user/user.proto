@@ -1,0 +1,16 @@
+syntax = "proto3";
+package user;
+option go_package = ".;user";
+
+service Service {
+    rpc GetUser(UserArgs) returns (UserResp) {};
+}
+
+message UserArgs {
+    uint64 uid = 1;
+}
+
+message UserResp {
+    string nickname = 1;
+    int32 age = 2;
+}
