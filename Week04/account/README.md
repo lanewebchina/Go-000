@@ -47,20 +47,3 @@ api实现一个profile服务，提供一个查询用户profile的接口。返回
 biz实现一个user业务提供用户基础数据，一个coin业务提供用户的金币数据。
 data实现user、coin表的读取与缓存
 
-## 服务调试
-进入`service_demo/cmd/profile`目录，执行代码`go run main.go`启动服务。  
-ctrl+c优雅停止服务。
-
-### 使用grpc调试工具调试接口
-安装grpcui
-```shell
-   go get github.com/fullstorydev/grpcui/...
-   go install github.com/fullstorydev/grpcui/cmd/grpcui
-```
-调试服务
-```shell
-   grpcui -plaintext 127.0.0.1:8080
-```
-在浏览器中打开grpcui输出的调试网址。  
-在grpcui的UI中选择需要调试的接口进行调试。
-
