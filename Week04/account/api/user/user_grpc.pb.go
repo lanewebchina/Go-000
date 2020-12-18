@@ -13,83 +13,85 @@ import (
 // is compatible with the grpc package it is being compiled against.
 const _ = grpc.SupportPackageIsVersion7
 
-// ServiceClient is the client API for Service service.
+// UserClient is the client API for User service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
-type ServiceClient interface {
+type UserClient interface {
+	//定义了一个接口GetUser 接收了一个UserArgs消息，返回一个UserResp消息
 	GetUser(ctx context.Context, in *UserArgs, opts ...grpc.CallOption) (*UserResp, error)
 }
 
-type serviceClient struct {
+type userClient struct {
 	cc grpc.ClientConnInterface
 }
 
-func NewServiceClient(cc grpc.ClientConnInterface) ServiceClient {
-	return &serviceClient{cc}
+func NewUserClient(cc grpc.ClientConnInterface) UserClient {
+	return &userClient{cc}
 }
 
-func (c *serviceClient) GetUser(ctx context.Context, in *UserArgs, opts ...grpc.CallOption) (*UserResp, error) {
+func (c *userClient) GetUser(ctx context.Context, in *UserArgs, opts ...grpc.CallOption) (*UserResp, error) {
 	out := new(UserResp)
-	err := c.cc.Invoke(ctx, "/user.Service/GetUser", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/user.User/GetUser", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-// ServiceServer is the server API for Service service.
-// All implementations must embed UnimplementedServiceServer
+// UserServer is the server API for User service.
+// All implementations must embed UnimplementedUserServer
 // for forward compatibility
-type ServiceServer interface {
+type UserServer interface {
+	//定义了一个接口GetUser 接收了一个UserArgs消息，返回一个UserResp消息
 	GetUser(context.Context, *UserArgs) (*UserResp, error)
-	mustEmbedUnimplementedServiceServer()
+	mustEmbedUnimplementedUserServer()
 }
 
-// UnimplementedServiceServer must be embedded to have forward compatible implementations.
-type UnimplementedServiceServer struct {
+// UnimplementedUserServer must be embedded to have forward compatible implementations.
+type UnimplementedUserServer struct {
 }
 
-func (UnimplementedServiceServer) GetUser(context.Context, *UserArgs) (*UserResp, error) {
+func (UnimplementedUserServer) GetUser(context.Context, *UserArgs) (*UserResp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetUser not implemented")
 }
-func (UnimplementedServiceServer) mustEmbedUnimplementedServiceServer() {}
+func (UnimplementedUserServer) mustEmbedUnimplementedUserServer() {}
 
-// UnsafeServiceServer may be embedded to opt out of forward compatibility for this service.
-// Use of this interface is not recommended, as added methods to ServiceServer will
+// UnsafeUserServer may be embedded to opt out of forward compatibility for this service.
+// Use of this interface is not recommended, as added methods to UserServer will
 // result in compilation errors.
-type UnsafeServiceServer interface {
-	mustEmbedUnimplementedServiceServer()
+type UnsafeUserServer interface {
+	mustEmbedUnimplementedUserServer()
 }
 
-func RegisterServiceServer(s grpc.ServiceRegistrar, srv ServiceServer) {
-	s.RegisterService(&_Service_serviceDesc, srv)
+func RegisterUserServer(s grpc.ServiceRegistrar, srv UserServer) {
+	s.RegisterService(&_User_serviceDesc, srv)
 }
 
-func _Service_GetUser_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _User_GetUser_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(UserArgs)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(ServiceServer).GetUser(ctx, in)
+		return srv.(UserServer).GetUser(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/user.Service/GetUser",
+		FullMethod: "/user.User/GetUser",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ServiceServer).GetUser(ctx, req.(*UserArgs))
+		return srv.(UserServer).GetUser(ctx, req.(*UserArgs))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-var _Service_serviceDesc = grpc.ServiceDesc{
-	ServiceName: "user.Service",
-	HandlerType: (*ServiceServer)(nil),
+var _User_serviceDesc = grpc.ServiceDesc{
+	ServiceName: "user.User",
+	HandlerType: (*UserServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
 			MethodName: "GetUser",
-			Handler:    _Service_GetUser_Handler,
+			Handler:    _User_GetUser_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

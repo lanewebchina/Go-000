@@ -5,8 +5,8 @@
 ## 准备工作
 ### 安装protoc
 ```shell
-    go get -u google.golang.org/protobuf/cmd/protoc-gen-go
-              google.golang.org/grpc/cmd/protoc-gen-go-grpc
+   go get google.golang.org/protobuf/cmd/protoc-gen-go \
+         google.golang.org/grpc/cmd/protoc-gen-go-grpc
 ```
 
 ### 创建pb
@@ -43,7 +43,4 @@ repo接口定义。
 实现repo接口，从db获取数据并实现缓存控制。
 
 ## 实现
-api实现一个profile服务，提供一个查询用户profile的接口。返回用户昵称和用户的金币数。
-biz实现一个user业务提供用户基础数据，一个coin业务提供用户的金币数据。
-data实现user、coin表的读取与缓存
 

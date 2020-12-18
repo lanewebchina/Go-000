@@ -1,15 +1,20 @@
-syntax = "proto3";
-package user;
+syntax = "proto3";  //版本
+package user;       //作用域
+
 option go_package = ".;user";
 
-service Service {
+//service 表示服务，在这里面定义接口
+service User {
+    //定义了一个接口GetUser 接收了一个UserArgs消息，返回一个UserResp消息
     rpc GetUser(UserArgs) returns (UserResp) {};
 }
 
+//定义一个输入的结构体 UserArgs
 message UserArgs {
     uint64 uid = 1;
 }
 
+//定义一个输出的结构体 UserResp
 message UserResp {
     string nickname = 1;
     int32 age = 2;

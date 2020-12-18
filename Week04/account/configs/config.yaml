@@ -1,5 +1,5 @@
 addr : :3000
 reflectionEnable : true
-db: 
+db:
   addr: 127.0.0.1
   passwd: 123456
