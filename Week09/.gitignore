@@ -1,0 +1,7 @@
+.env
+.vscode
+__debug_bin
+.vscode/*
+go.mod
+go.sum
+logs
